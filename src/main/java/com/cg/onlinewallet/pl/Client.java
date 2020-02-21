@@ -50,8 +50,15 @@ public class Client {
 	        	
 	        	System.out.println("enter balance");
 	        	double balance = scanner.nextDouble();
-	        	
-	        	
+	        	try
+	        	{
+	        		//String bal=String.valueOf(balance);
+	        	boolean flag=accountService.validateBalance(balance);
+	        	}
+	        	catch(Exception e)
+	        	{
+	        		System.err.println(e.getMessage());
+	        	}
 	        	
 	        	walletAccount = new WalletAccount();
 	        	walletTransaction=new WalletTransaction();
@@ -79,7 +86,8 @@ public class Client {
 	        		 System.out.println("enter amount to withdraw");
 	        		 double amount = scanner.nextDouble();
 	        		
-	        		 
+	        		// accountService.validateAccountId(accountId)
+	        			 
 	        		 double balance1= accountService.withdraw(accountId, amount);
 	        		 
 
@@ -92,7 +100,7 @@ public class Client {
 	        		double bal=walletAccount.getBalance();
 	        	
 					System.out.println(bal);
-					System.out.println("DEBITED SUCCESSFULLY");
+					System.out.println(amount +" DEBITED SUCCESSFULLY "+" from Id "+ accountId  );
 	        	 }
 	        	catch(AccountException  e)
 	        	{
@@ -118,7 +126,7 @@ public class Client {
 			        	walletTransaction.setAmount(amount);
 			        	double balance3=walletAccount.getBalance();
 			        	System.out.println(balance3);
-			        	System.out.println("CREDITED SUCCESSFULLY");
+			        	System.out.println(amount+ " CREDITED SUCCESSFULLY "+ " from Id "+accountId);
 		        		 
 		        	 }
 		        	catch(AccountException  e)
@@ -196,5 +204,4 @@ public class Client {
 	        	
 		}
 	}
-
 

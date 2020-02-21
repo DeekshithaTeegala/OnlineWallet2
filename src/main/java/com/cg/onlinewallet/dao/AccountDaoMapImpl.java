@@ -77,7 +77,7 @@ public class AccountDaoMapImpl implements AccountDao
 		{
 		
 		   walletAccount=accountMap.get(accountId);
-			accountMap.put(accountId, walletAccount);  
+//			accountMap.put(accountId, walletAccount);  
 		}
 		else
 		{
@@ -112,14 +112,13 @@ public class AccountDaoMapImpl implements AccountDao
 	{
 		List<WalletTransaction>   list=null;
 		WalletAccount	walletAccount=null;
-
-		
-		
+	
+        
        	walletAccount=accountMap.get(accountId);
        	
        	   list = walletAccount.getList();
 		
-		
+          
 		return list;
 	}
 

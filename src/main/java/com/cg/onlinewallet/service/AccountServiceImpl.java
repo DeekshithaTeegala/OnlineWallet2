@@ -20,10 +20,37 @@ public class AccountServiceImpl implements AccountService
 	{
 		accountDao = new AccountDaoMapImpl();
 	}
+	
+	@Override
+	public boolean validateAccountId(int accountId) throws AccountException
+	{
+		String id=String.valueOf(accountId);
+		boolean flag=id.matches("[0-9]{4}");
+		if(!flag) 
+		{
+		  throw new AccountException("AccountId should be of 4 digits");	
+		}
+		return flag;
+	}
+	@Override
+	public boolean validateBalance(double balance) throws AccountException
+	{
+		String bal=String.valueOf(balance);
+		if(bal.matches("[a-zA-Z]")){
+			throw new AccountException("balance should not contain characters");
+		}
+			if((balance<=1000))
+				throw new AccountException("minimum balance should be 1000");
+		   
+	
+		return true;
+	}
+
+
     @Override
 	public void fundTransfer(int accountId1 , int accountId2 , double amount) throws AccountException
 	{
-		
+	
        accountDao.withdraw(accountId1, amount);
        accountDao.deposit(accountId2, amount);
 	
@@ -38,17 +65,29 @@ public class AccountServiceImpl implements AccountService
 
 		
 		account.setAccountId(accountId);
+		WalletAccount walletAccount=null;
+		//boolean flag=validateBalance(walletAccount.getBalance());
+		//if(flag==true) {
+			//throw new AccountException("Balance should not contain Alphabets");
+		//}
 	
 		return accountDao.createWalletAccount(account);
+		
 	}
 
 	@Override
 	public double withdraw(int accountId, double amount) throws AccountException 
 	{
-		
-		
-		
-		WalletAccount walletAccount = accountDao.find(accountId);
+		WalletAccount walletAccount=null;
+//		boolean flag=validateBalance(walletAccount.getBalance());
+	//	if(flag==true) {
+		//	throw new AccountException("Balance should not contain Alphabets");
+		//}
+		//else
+		//{
+		if(!validateAccountId(accountId))
+			throw new AccountException("accountId should be of 4 digits");
+	    walletAccount = accountDao.find(accountId);
 		WalletTransaction transaction = new WalletTransaction();
 		
 	
@@ -61,8 +100,9 @@ public class AccountServiceImpl implements AccountService
 		transaction.setTransactionId(transactionId);
 		walletAccount.setList(list);
 		transaction.setAmount(amount);
-
+		//}
 		double balance = accountDao.withdraw(accountId,amount);
+		
 		return balance ;
 	}
 		
@@ -73,6 +113,7 @@ public class AccountServiceImpl implements AccountService
 	@Override
 	public double deposit(int accountId, double amount) throws AccountException 
 	{
+		validateAccountId(accountId);
 		WalletAccount walletAccount=accountDao.find(accountId);
 		WalletTransaction transaction = new WalletTransaction();
 
