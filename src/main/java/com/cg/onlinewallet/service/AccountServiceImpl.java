@@ -26,10 +26,16 @@ public class AccountServiceImpl implements AccountService
 	{
 		String id=String.valueOf(accountId);
 		boolean flag=id.matches("[0-9]{4}");
+	
+		
 		if(!flag) 
 		{
 		  throw new AccountException("AccountId should be of 4 digits");	
 		}
+		
+		boolean f=id.matches("[a-zA-z]");
+		if(f)
+			throw new AccountException("account id should be of digits");
 		return flag;
 	}
 	@Override
