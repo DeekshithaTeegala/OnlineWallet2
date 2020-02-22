@@ -52,24 +52,20 @@ public class Client {
 	        	double balance = scanner.nextDouble();
 	        	try
 	        	{
-	        		//String bal=String.valueOf(balance);
-	        	boolean flag=accountService.validateBalance(balance);
-	        	}
-	        	catch(Exception e)
-	        	{
-	        		System.err.println(e.getMessage());
-	        	}
 	        	
-	        	walletAccount = new WalletAccount();
-	        	walletTransaction=new WalletTransaction();
-	        	walletTransaction.setAccountBalance(balance);
+	        	    accountService.validateBalance(balance);
 	        
-	        	walletAccount.setBalance(balance);
 	        	
-	        	try {
-	        		int id = accountService.createWalletAccount(walletAccount);
+	        	    walletAccount = new WalletAccount();
+	        	    walletTransaction=new WalletTransaction();
+	        	    walletTransaction.setAccountBalance(balance);
+	        
+	        	    walletAccount.setBalance(balance);
+	        	
+	        	
+	        	    int id = accountService.createWalletAccount(walletAccount);
 	        		System.out.println("Account id is "+id);
-	        		
+	        	
 	        	}
 	        	catch(AccountException  e)
 	        	{
@@ -82,11 +78,13 @@ public class Client {
 	        	     System.out.println("Enter account Id");
 	        	 
 	        		 int accountId = scanner.nextInt();
+	        		 accountService.validateAccountId(accountId);
 	        		 accountService.find(accountId);
 	        		 System.out.println("enter amount to withdraw");
 	        		 double amount = scanner.nextDouble();
+	        		 accountService.validateBalance(amount);
+
 	        		
-	        		// accountService.validateAccountId(accountId)
 	        			 
 	        		 double balance1= accountService.withdraw(accountId, amount);
 	        		 
@@ -114,9 +112,11 @@ public class Client {
 		        	 System.out.println("Enter account Id");
 		        	 
 		        		 int accountId = scanner.nextInt();
+		        		 accountService.validateAccountId(accountId);
 		        		 accountService.find(accountId);
 		        		 System.out.println("enter amount to deposit");
 		        		 double amount = scanner.nextDouble();
+		        		 accountService.validateBalance(amount);
 		        		double balance2 = accountService.deposit(accountId, amount);
 		        		
 		        		walletAccount = new WalletAccount();
@@ -139,6 +139,7 @@ public class Client {
 	                 {
 	                  System.out.println("Enter account id to delete");
 	        	      int id = scanner.nextInt();
+	        	      accountService.validateAccountId(id);
 	        	      List<WalletAccount> list1=null;
         		        walletAccount=accountService.deleteAccount(id);
         		       System.out.println("ACCOUNT DELETED SUCCESSFULLY");
@@ -153,6 +154,7 @@ public class Client {
 	               {
 	        	     System.out.println("enter account id");
 	        	     int accountId = scanner.nextInt();
+	        	     accountService.validateAccountId(accountId);
 	        	     LocalDateTime dateTime=LocalDateTime.now();
 	        	     list=accountService.findAllTransaction(accountId);
 	                 for(WalletTransaction wt:list) 
@@ -177,10 +179,14 @@ public class Client {
 	                  {
 	        	         System.out.println("enter account id to withdraw");
 	        	         int accountId1=scanner.nextInt();
+	        	         accountService.validateAccountId(accountId1);
 	        	         System.out.println("enter account id to deposit");
 	        	         int accountId2=scanner.nextInt();
+	        	         accountService.validateAccountId(accountId2);
+
 	        	         System.out.println("enter amount to transfer");
 	        	         double amount=scanner.nextDouble();
+	        	         accountService.validateBalance(amount);
 	        	         accountService.fundTransfer(accountId1, accountId2, amount);
 	        	         WalletAccount walletAccount1=accountService.find(accountId1);
 	        	        System.out.println(" walletaccount1 balance is: "+ walletAccount1.getBalance());

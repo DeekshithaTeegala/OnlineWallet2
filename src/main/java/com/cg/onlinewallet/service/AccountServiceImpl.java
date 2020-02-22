@@ -1,6 +1,7 @@
 package com.cg.onlinewallet.service;
 
 import java.time.LocalDate;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -33,30 +34,39 @@ public class AccountServiceImpl implements AccountService
 		  throw new AccountException("AccountId should be of 4 digits");	
 		}
 		
-		boolean f=id.matches("[a-zA-z]");
-		if(f)
-			throw new AccountException("account id should be of digits");
-		return flag;
+		boolean f=id.matches("[a-zA-z]+");
+		 if(f)
+			throw new AccountException("account id should not contain characters");
+		return false;
 	}
 	@Override
 	public boolean validateBalance(double balance) throws AccountException
 	{
 		String bal=String.valueOf(balance);
-		if(bal.matches("[a-zA-Z]")){
-			throw new AccountException("balance should not contain characters");
-		}
+		boolean f=bal.matches("[a-zA-Z]");
+		boolean flag=bal.matches("[0-9]{4}");
+		
+		if(flag)
+		{
 			if((balance<=1000))
+			{
 				throw new AccountException("minimum balance should be 1000");
+			}
+		}
+		
+		
 		   
 	
-		return true;
+		return flag;
 	}
 
 
     @Override
 	public void fundTransfer(int accountId1 , int accountId2 , double amount) throws AccountException
 	{
-	
+	   validateAccountId(accountId1);
+	   validateAccountId(accountId2);
+	   validateBalance(amount);
        accountDao.withdraw(accountId1, amount);
        accountDao.deposit(accountId2, amount);
 	
@@ -71,11 +81,8 @@ public class AccountServiceImpl implements AccountService
 
 		
 		account.setAccountId(accountId);
-		WalletAccount walletAccount=null;
-		//boolean flag=validateBalance(walletAccount.getBalance());
-		//if(flag==true) {
-			//throw new AccountException("Balance should not contain Alphabets");
-		//}
+		//WalletAccount walletAccount=null;
+	
 	
 		return accountDao.createWalletAccount(account);
 		
@@ -85,14 +92,23 @@ public class AccountServiceImpl implements AccountService
 	public double withdraw(int accountId, double amount) throws AccountException 
 	{
 		WalletAccount walletAccount=null;
+		String id=String.valueOf(accountId);
+		boolean flag=id.matches("[0-9]{4}");
+	
+		
+		if(!flag) 
+		{
+		  throw new AccountException("AccountId should be of 4 digits");	
+		}
+		
 //		boolean flag=validateBalance(walletAccount.getBalance());
 	//	if(flag==true) {
 		//	throw new AccountException("Balance should not contain Alphabets");
 		//}
 		//else
 		//{
-		if(!validateAccountId(accountId))
-			throw new AccountException("accountId should be of 4 digits");
+		//if(!validateAccountId(accountId))
+			//throw new AccountException("accountId should be of 4 digits");
 	    walletAccount = accountDao.find(accountId);
 		WalletTransaction transaction = new WalletTransaction();
 		
