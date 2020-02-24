@@ -1,6 +1,7 @@
 package com.cg.onlinewallet.pl;
 
 
+import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 
@@ -31,6 +32,8 @@ public class Client {
 		WalletTransaction walletTransaction=null;
 		List<WalletTransaction> list=null;
 		WalletAccountType type=null;
+		try
+		{
 		while(choice!=7)
 		{
 			System.out.println("1.create wallet account ");
@@ -71,8 +74,8 @@ public class Client {
 	        	{
 	        		System.err.println(e.getMessage());
 	        	}
+	      
 	        	break;
-	        	
 	        case 2:try
 	               {
 	        	     System.out.println("Enter account Id");
@@ -104,6 +107,10 @@ public class Client {
 	        	{
 	        		System.err.println(e.getMessage());
 	        	}
+	        catch(InputMismatchException e)
+			{
+				System.err.println("Account Id should consists 4 digits");
+			}
 	        	break;
 	        	
 	        case 3:
@@ -133,6 +140,10 @@ public class Client {
 		        	{
 		        		System.err.println(e.getMessage());
 		        	}
+	        	     catch(InputMismatchException e)
+	        			{
+	        				System.err.println("Account Id should consists 4 digits");
+	        			}
 		        	break;
 		        	
 	        case 4:  try 
@@ -148,6 +159,10 @@ public class Client {
         	     {
         		  System.err.println(e.getMessage());
         	     }
+	        catch(InputMismatchException e)
+			{
+				System.err.println("Account Id should consists 4 digits");
+			}
 	             break;
 	        
 	        case 5:try
@@ -174,6 +189,10 @@ public class Client {
    	                 {
    		                System.err.println(e.getMessage());
    	                 }
+	        catch(InputMismatchException e)
+			{
+				System.err.println("Account Id should consists 4 digits");
+			}
 	                 break;
 	        case 6: try
 	                  {
@@ -198,14 +217,24 @@ public class Client {
                       {
                        System.err.println(e.getMessage());
                       }
+	        catch(InputMismatchException e)
+			{
+				System.err.println("Account Id should consists 4 digits");
+			}
                       break;
 	        case 7:
 	        	   System.out.println("Thank you");
 	        	
 	        	   return;
 	        	}
-	        }
 	        
+	        }
+	
+		}
+		catch(InputMismatchException e)
+		{
+			System.err.println("Invalid choice Enter choice From 1-7");
+		}
 	        
 	        	
 		}
