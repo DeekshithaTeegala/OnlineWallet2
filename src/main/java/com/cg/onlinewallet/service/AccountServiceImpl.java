@@ -42,30 +42,17 @@ public class AccountServiceImpl implements AccountService {
 	
 
 	@Override
-	public int createWalletAccount(WalletAccount account) throws AccountException {
-		
-		
-		
-		
-		
-		
-		
-			Random random = new Random();
+	public int createWalletAccount(WalletAccount account) throws AccountException 
+	{
+		Random random = new Random();
 		int accountId = random.nextInt(100) + 1000;
-		String s = String.valueOf(accountId);
-		if (!(s.matches("[0-9]{4}")))
-		throw new AccountException(" ID should be of 4 digits ");
+		
 
 		account.setAccountId(accountId);
 		
 
 		double balance=account.getBalance();
-		//String bal=String.valueOf(balance);
-		//boolean flag=bal.matches("[0-9]{4}");
-		//if(!flag)
-		//{
-		//	throw new AccountException("balance should be of 4 digits");
-		//}
+	
 		return accountDao.createWalletAccount(account);
 
 	}
@@ -73,30 +60,13 @@ public class AccountServiceImpl implements AccountService {
 	@Override
 	public double withdraw(int accountId, double amount) throws AccountException {
 		WalletAccount walletAccount = null;
-		String id = String.valueOf(accountId);
-		boolean flag = id.matches("[0-9]{4}");
-
-		if (!flag) {
-			throw new AccountException("AccountId should be of 4 digits");
-		}
-
-		// boolean flag=validateBalance(walletAccount.getBalance());
-		// if(flag==true) {
-		// throw new AccountException("Balance should not contain Alphabets");
-		// }
-		// else
-		// {
-		// if(!validateAccountId(accountId))
-		// throw new AccountException("accountId should be of 4 digits");
+	
 		
-		// }
 		
 		boolean flag1 = validateAccountId(accountId);
         if(!flag1)
         	throw new AccountException("account id should be of 4 digits");
-        boolean flag3=validateBalance(amount);
-		 if(!flag3)
-			 throw new AccountException("balance should be of 4 digits");
+     
 		double balance = accountDao.withdraw(accountId, amount);
 
 		return balance;
@@ -108,9 +78,7 @@ public class AccountServiceImpl implements AccountService {
 		boolean flag1 = validateAccountId(accountId);
         if(!flag1)
         	throw new AccountException("account id should be of 4 digits");
-        boolean flag3=validateBalance(amount);
-		 if(!flag3)
-			 throw new AccountException("balance should be of 4 digits");
+      
 		double balance = accountDao.deposit(accountId, amount);
 		return balance;
 	}
@@ -134,9 +102,7 @@ public class AccountServiceImpl implements AccountService {
 	  boolean flag2= validateAccountId(accountId2);
 	    if(!flag2)
 	    	throw new AccountException("account id should be of 4 digits");
-		 boolean flag3=validateBalance(amount);
-		 if(!flag3)
-			 throw new AccountException("balance should be of 4 digits");
+		
 		accountDao.withdraw(accountId1, amount);
 		accountDao.deposit(accountId2, amount);
 

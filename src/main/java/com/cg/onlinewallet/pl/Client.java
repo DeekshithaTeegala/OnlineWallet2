@@ -32,8 +32,8 @@ public class Client {
 		WalletTransaction walletTransaction=null;
 		List<WalletTransaction> list=null;
 		WalletAccountType type=null;
-		try
-		{
+//		try
+//		{
 		while(choice!=7)
 		{
 			System.out.println("1.create wallet account ");
@@ -44,39 +44,44 @@ public class Client {
 			System.out.println("6.fund transfer");
 			System.out.println("7.exit");
 			System.out.println("Enter your choice");
-		
+		     try {
 	        choice = scanner.nextInt();
-	        
+		     }
+		     catch(Exception e)
+		     {
+		    	 System.err.println("invalid choice");
+		    	 scanner.nextLine();
+		     }
 	        switch(choice)
 	        {
-	        case 1:
+	        case 1: try
+	                {
 	        	
-	        	System.out.println("enter balance");
-	        	double balance = scanner.nextDouble();
-	        	try
-	        	{
+	        	     System.out.println("enter balance");
+	        	     double balance = scanner.nextDouble();
+	        	    
 	        	
-	        	    accountService.validateBalance(balance);
+	        	       accountService.validateBalance(balance);
 	        
 	        	
-	        	    walletAccount = new WalletAccount();
-	        	    walletTransaction=new WalletTransaction();
-	        	    walletTransaction.setAccountBalance(balance);
+	        	       walletAccount = new WalletAccount();
+	        	       walletTransaction=new WalletTransaction();
+	        	       walletTransaction.setAccountBalance(balance);
 	        
-	        	    walletAccount.setBalance(balance);
+	        	       walletAccount.setBalance(balance);
 	        	
 	        	
-	        	    int id = accountService.createWalletAccount(walletAccount);
-	        		System.out.println("Account id is "+id);
+	        	       int id = accountService.createWalletAccount(walletAccount);
+	        		   System.out.println("Account id is "+id);
 	        	
-	        	}
-	        	catch(AccountException  e)
-	        	{
-	        		System.err.println(e.getMessage());
-	        	}
+	        	     }
+	        	     catch(AccountException  e)
+	        	     {
+	        		  System.err.println(e.getMessage());
+	        	     }
 	      
-	        	break;
-	        case 2:try
+	        	     break;
+	        case 2: try
 	               {
 	        	     System.out.println("Enter account Id");
 	        	 
@@ -230,11 +235,11 @@ public class Client {
 	        
 	        }
 	
-		}
-		catch(InputMismatchException e)
-		{
-			System.err.println("Invalid choice Enter choice From 1-7");
-		}
+//		}
+//		catch(InputMismatchException e)
+//		{
+//			System.err.println("Invalid choice Enter choice From 1-7");
+//		}
 	        
 	        	
 		}

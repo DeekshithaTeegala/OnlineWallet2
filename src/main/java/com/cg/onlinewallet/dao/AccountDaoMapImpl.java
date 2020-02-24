@@ -82,7 +82,7 @@ public class AccountDaoMapImpl implements AccountDao {
 		if (flag) {
 
 			walletAccount = accountMap.get(accountId);
-			// accountMap.put(accountId, walletAccount);
+			
 		} else {
 			throw new AccountException("id does not found");
 		}
